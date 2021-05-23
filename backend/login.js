@@ -1,4 +1,3 @@
-import app from "../server";
 
 passport.use('local-signup', new LocalStrategy(
 {
@@ -39,3 +38,4 @@ passport.use(new LocalStrategy(
         })
     }
 ))
+
