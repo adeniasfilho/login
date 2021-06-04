@@ -42,6 +42,7 @@ passport.use(new LocalStrategy(
 
 // Protótipo #2
 const mysql = require('mysql');
+const { DOUBLE } = require('sequelize/types');
     crypto = require('crypto');
 
 const connection = mysql.createConnection({
@@ -68,5 +69,9 @@ connection.query('SELECT password, salt FROM user WHERE username = ?',
             console.log("Sua senha é desconhecida.Tente novamente.");
         }
         connection.end();
-    })
+    });
+
+    /*CREATE TABLE user (userid INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(userid),
+        username VARCHAR(400) NOT NULL, passwordhash VARCHAR(400) NOT NULL ,
+        salt DOUBLE NOT NULL);*/
 
