@@ -1,5 +1,6 @@
+//Protótipo #1
 
-passport.use('local-signup', new LocalStrategy(
+/*passport.use('local-signup', new LocalStrategy(
 {
     usernameField: 'email',
     passwordField: 'password',
@@ -37,5 +38,35 @@ passport.use(new LocalStrategy(
             return done(null, user);
         })
     }
-))
+))*/
+
+// Protótipo #2
+const mysql = require('mysql');
+    crypto = require('crypto');
+
+const connection = mysql.createConnection({
+    user: 'username',
+    password: 'password'
+});
+
+connection.query('USE nodedatabase');
+const username = process.argv[2];
+const password = process.argv[3]; 
+
+connection.query('SELECT password, salt FROM user WHERE username = ?',
+    [username], (err, result, fields) => {
+        if (err) return console.error(err);
+
+        var newhash = crypto.createHash('sha512')
+            .update(result[0].salt + password, 'utf8')
+            .digest('hex');
+
+        if (result[0].password === newhash) {
+            console.log("Ok, você está logado.");
+        }
+        else {
+            console.log("Sua senha é desconhecida.Tente novamente.");
+        }
+        connection.end();
+    })
 

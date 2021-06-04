@@ -1,9 +1,12 @@
-const http = require ('http');
-const login = require ('./backend/login.js');
-const port = process.env.PORT || 3000;
-login.set('port', port);
+const http = require('http');
+const express = require('express');
+const login = express();
+login.use = (express.json());
+const porta = 3000;
+login.set('port', porta);
 const server = http.createServer(login);
-server.listen(port);
+server.listen(3000);
 
-module.exports = login;
-export default login;
+module.exports = server;
+
+
